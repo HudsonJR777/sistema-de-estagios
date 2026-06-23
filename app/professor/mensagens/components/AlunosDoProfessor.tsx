@@ -11,6 +11,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import api from "@/src/services/api";
+import MensagemAlunoCard from "../../meus-estagios/components/MensagemAlunoCard";
+import { EstagiosCoordenador } from "@/src/components/role-based/coordenador/EstagiosCoordenador";
 
 interface ApiEstagioData {
   id: string;
@@ -70,7 +72,7 @@ export default function AlunosDoProfessor() {
 
   // Função para mapear status da API para status de exibição
   const mapStatusEstagio = (
-    statusEstagio: string
+    statusEstagio: string,
   ): AlunoEstagioData["status"] => {
     switch (statusEstagio) {
       case "ATIVO":
@@ -133,6 +135,8 @@ export default function AlunosDoProfessor() {
     setSelectedItem((prev) => (prev === id ? null : id));
   };
 
+  const [showModalMensagem, setShowModalMensagem] = useState(false);
+
   useEffect(() => {
     const fetchAlunos = async () => {
       try {
@@ -150,7 +154,8 @@ export default function AlunosDoProfessor() {
       } catch (error: any) {
         console.error("Erro ao carregar alunos:", error);
         setError(
-          error.response?.data?.message || "Erro ao carregar dados dos estágios"
+          error.response?.data?.message ||
+            "Erro ao carregar dados dos estágios",
         );
       } finally {
         setLoading(false);
@@ -179,7 +184,7 @@ export default function AlunosDoProfessor() {
           <p className="text-sm mt-2">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+            className="cursor-pointer mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
           >
             Tentar novamente
           </button>
@@ -196,18 +201,33 @@ export default function AlunosDoProfessor() {
           {selectedItem && (
             <>
               <span className="text-sm text-gray-600">1 aluno selecionado</span>
-              <button className="flex items-center gap-2 px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
+              <button className="cursor-pointer flex items-center gap-2 px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
                 <FileText className="w-4 h-4" />
                 Detalhes
               </button>
-              <button className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors">
+              <button
+                onClick={() => setShowModalMensagem(true)}
+                className="cursor-pointer flex items-center gap-2 px-3 py-2 text-green-600 hover:bg-green-50 rounded-md transition-colors"
+              >
                 <Eye className="w-4 h-4" />
                 Aprovar
               </button>
+              {showModalMensagem && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                  <MensagemAlunoCard
+                    estagioId={
+                      alunos.find((aluno) => aluno.id === selectedItem)?.id ||
+                      ""
+                    }
+                    onClose={() => setShowModalMensagem(false)}
+                  />
+                </div>
+              )}
             </>
           )}
+
           <div className="ml-auto">
-            <button className="p-2 hover:bg-gray-200 rounded-md transition-colors">
+            <button className="cursor-pointer p-2 hover:bg-gray-200 rounded-md transition-colors">
               <Trash2 className="w-4 h-4 text-gray-500" />
             </button>
           </div>
@@ -249,7 +269,7 @@ export default function AlunosDoProfessor() {
                   name="selectedAluno"
                   checked={selectedItem === aluno.id}
                   onChange={() => handleSelectItem(aluno.id)}
-                  className="border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                 />
               </TableCell>
               <TableCell className="px-4 font-medium text-gray-900">
@@ -274,14 +294,14 @@ export default function AlunosDoProfessor() {
               <TableCell className="px-4">
                 <span
                   className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(
-                    aluno.status
+                    aluno.status,
                   )}`}
                 >
                   {aluno.status}
                 </span>
               </TableCell>
               <TableCell className="px-4">
-                <button className="p-1 hover:bg-gray-200 rounded transition-colors">
+                <button className="cursor-pointer p-1 hover:bg-gray-200 rounded transition-colors">
                   <MoreHorizontal className="w-4 h-4 text-gray-500" />
                 </button>
               </TableCell>

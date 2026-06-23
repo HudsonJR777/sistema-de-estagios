@@ -19,7 +19,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Interceptor para responses (opcional - para tratamento de erros)
@@ -30,7 +30,7 @@ api.interceptors.response.use(
   (error) => {
     console.error("Erro na API:", error);
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

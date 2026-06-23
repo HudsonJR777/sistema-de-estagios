@@ -8,12 +8,14 @@ import {
   Settings,
   GraduationCap,
   UserCheck,
+  BriefcaseBusiness,
 } from "lucide-react";
+import { title } from "process";
 
 export const navigationByRole = {
   aluno: [
     {
-      icon: <Grip className="w-5 h-5" />,
+      icon: <Grip className="w-6 h-6" />,
       title: "Início",
       href: "/aluno/inicio",
     },
@@ -30,12 +32,12 @@ export const navigationByRole = {
   ],
   professor: [
     {
-      icon: <Grip className="w-5 h-5" />,
+      icon: <Grip className="w-6 h-6" />,
       title: "Início",
       href: "/professor/inicio",
     },
     {
-      icon: <File className="w-5 h-5" />,
+      icon: <File className="w-6 h-6" />,
       title: "Meus Estágios",
       href: "/professor/meus-estagios",
     },
@@ -48,6 +50,11 @@ export const navigationByRole = {
       icon: <MessageSquareDot className="w-5 h-5" />,
       title: "Mensagens",
       href: "/professor/mensagens",
+    },
+    {
+      icon: <BriefcaseBusiness className="w-5 h-5" />,
+      title: "Vagas",
+      href: "/professor/vagas",
     },
   ],
   coordenador: [

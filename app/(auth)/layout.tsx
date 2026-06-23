@@ -24,7 +24,9 @@ export default function AuthLayout({
                 height={40}
               />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Criar Conta</h1>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Entrar na Conta
+            </h1>
           </div>
           <div className="bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden">
             {children}

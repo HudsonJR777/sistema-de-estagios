@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export default function ProfessorMeusEstagiosPage() {
   const user = true;
   const [currentView, setCurrentView] = useState<"Estagios" | "Confirmacoes">(
-    "Estagios"
+    "Estagios",
   );
 
   const [estagios, setEstagios] = useState<EstagioData[]>([]);
@@ -22,7 +22,7 @@ export default function ProfessorMeusEstagiosPage() {
       try {
         setLoading(true);
         setError(null);
-        const response = await api.get("/api/professores", {
+        const response = await api.get("/api/professores/meus-estagios", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
           },

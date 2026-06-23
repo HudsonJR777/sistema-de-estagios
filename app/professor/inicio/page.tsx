@@ -50,7 +50,7 @@ export default function ProfessorInicioPage() {
       try {
         setLoading(true);
         setError(null);
-        const response = await api.get("/api/professores", {
+        const response = await api.get("/api/professores/meus-estagios", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
           },

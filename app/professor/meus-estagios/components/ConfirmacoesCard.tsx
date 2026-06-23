@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import api from "@/src/services/api";
 import AprovarCardModal from "./AprovarCardModal";
+import MensagemAlunoCard from "./MensagemAlunoCard";
 
 // Interfaces baseadas nos DTOs Java
 interface EstagioResponseDTO {
@@ -246,12 +247,12 @@ export default function ConfirmacoesCard() {
   });
 
   const convertRelatorioToTableData = (
-    relatorio: RelatorioResponseDTO
+    relatorio: RelatorioResponseDTO,
   ): Estagio => ({
     id: relatorio.id,
     nome: relatorio.titulo,
     dataInicio: new Date(relatorio.dataEntregaPrevista).toLocaleDateString(
-      "pt-BR"
+      "pt-BR",
     ),
     concedente: "Relatório",
     professor: "Eduardo Pelli", // Temporário até ter dados relacionados
@@ -295,7 +296,7 @@ export default function ConfirmacoesCard() {
     data: Estagio[],
     title: string,
     currentPage: number,
-    setCurrentPage: (page: number) => void
+    setCurrentPage: (page: number) => void,
   ) => {
     const totalPages = Math.ceil(data.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -354,7 +355,7 @@ export default function ConfirmacoesCard() {
                   <td className="px-4 py-3">
                     <span
                       className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                        estagio.status
+                        estagio.status,
                       )}`}
                     >
                       {estagio.status}
@@ -364,28 +365,29 @@ export default function ConfirmacoesCard() {
                     <div className="flex items-center justify-center gap-2">
                       <button
                         onClick={() => setShowModalAprovar(true)}
-                        className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="cursor-pointer p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         title="Visualizar"
                       >
                         <Eye className="w-4 h-4" />
                       </button>
                       {/* {showModalAprovar && (
-                        <AprovarCardModal
-                          estagioId={estagio.id}
-                          isOpen={showModalAprovar}
-                          onClose={() => setShowModalAprovar(false)}
-                          onApprove={() => {}}
-                          onReject={() => {}}
-                        />
+                        // <AprovarCardModal
+                        //   estagioId={estagio.id.} // Substituir pelo ID real do estágio
+                        //   isOpen={showModalAprovar}
+                        //   onClose={() => setShowModalAprovar(false)}
+                        //   onApprove={() => {}}
+                        //   onReject={() => {}}
+                        // />
                       )} */}
                       <button
-                        className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                        className="cursor-pointer p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                         title="Aprovar"
                       >
                         <Check className="w-4 h-4" />
                       </button>
+
                       <button
-                        className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        className="cursor-pointer p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                         title="Rejeitar"
                       >
                         <X className="w-4 h-4" />
@@ -424,7 +426,7 @@ export default function ConfirmacoesCard() {
                   >
                     {page}
                   </button>
-                )
+                ),
               )}
 
               <button
@@ -463,7 +465,7 @@ export default function ConfirmacoesCard() {
                 dashboardData.estagiosPendentes.map(convertEstagioToTableData),
                 "Novos Estágios:",
                 currentPageNovos,
-                setCurrentPageNovos
+                setCurrentPageNovos,
               )}
 
             {dashboardData.aditivosPendentes.length > 0 &&
@@ -471,17 +473,17 @@ export default function ConfirmacoesCard() {
                 dashboardData.aditivosPendentes.map(convertAditivoToTableData),
                 "Aditivos Pendentes:",
                 currentPageAditivos,
-                setCurrentPageAditivos
+                setCurrentPageAditivos,
               )}
 
             {dashboardData.relatoriosPendentes.length > 0 &&
               renderTable(
                 dashboardData.relatoriosPendentes.map(
-                  convertRelatorioToTableData
+                  convertRelatorioToTableData,
                 ),
                 "Relatórios Pendentes:",
                 currentPageRelatorios,
-                setCurrentPageRelatorios
+                setCurrentPageRelatorios,
               )}
 
             {dashboardData.rescisoesPendentes.length > 0 &&
@@ -489,17 +491,17 @@ export default function ConfirmacoesCard() {
                 dashboardData.rescisoesPendentes.map(convertEstagioToTableData),
                 "Rescisões Pendentes:",
                 currentPageRescisoes,
-                setCurrentPageRescisoes
+                setCurrentPageRescisoes,
               )}
 
             {dashboardData.conclusoesPendentes.length > 0 &&
               renderTable(
                 dashboardData.conclusoesPendentes.map(
-                  convertEstagioToTableData
+                  convertEstagioToTableData,
                 ),
                 "Estágios a Concluir:",
                 currentPageConcluir,
-                setCurrentPageConcluir
+                setCurrentPageConcluir,
               )}
 
             {/* Mensagem quando não há pendências */}

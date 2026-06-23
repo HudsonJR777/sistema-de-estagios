@@ -1,7 +1,13 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { LogOut, Grip, MessageSquareDot, File } from "lucide-react";
+import {
+  LogOut,
+  Grip,
+  MessageSquareDot,
+  File,
+  BriefcaseBusiness,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { logout } from "@/src/services/auth";
 import { useEffect, useState } from "react";
@@ -72,19 +78,24 @@ export default function SideBar({ navigationItems }: SideBarProps) {
 
     return [
       {
-        icon: <Grip className="w-5 h-5" />,
+        icon: <Grip className="w-6 h-6" />,
         title: "Início",
         href: `${baseRoute}/inicio`,
       },
       {
-        icon: <File className="w-5 h-5" />,
+        icon: <File className="w-6 h-6" />,
         title: "Meus Estágios",
         href: `${baseRoute}/meus-estagios`,
       },
       {
-        icon: <MessageSquareDot className="w-5 h-5" />,
+        icon: <MessageSquareDot className="w-6 h-6" />,
         title: "Mensagens",
         href: `${baseRoute}/mensagens`,
+      },
+      {
+        icon: <BriefcaseBusiness className="w-6 h-6" />,
+        title: "Vagas",
+        href: `${baseRoute}/vagas`,
       },
     ];
   };
@@ -174,7 +185,7 @@ export default function SideBar({ navigationItems }: SideBarProps) {
                 </div>
                 <Link
                   href={header.href}
-                  className={`text-[16px] leading-[24px] transition-all duration-300 ease-in-out ${
+                  className={`text-[24px] leading-[24px] transition-all duration-300 ease-in-out ${
                     isActive
                       ? "text-[color:var(--role-color)] font-bold"
                       : "text-[#030229] font-semibold group-hover:text-[#605BFF]"

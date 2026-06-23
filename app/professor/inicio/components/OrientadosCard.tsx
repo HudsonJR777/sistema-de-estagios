@@ -6,14 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  CalendarDays,
-  Ellipsis,
-  ListCollapse,
-  Trash,
-  Trash2,
-  X,
-} from "lucide-react";
+import { CalendarDays, ListCollapse, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import OrientadosDados from "./OrientadosDados";
 
@@ -110,7 +103,7 @@ export function OrientadosCard({
     [key: string]: boolean;
   }>({});
   const [selectedEstagio, setSelectedEstagio] = useState<EstagioData | null>(
-    null
+    null,
   );
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
 
@@ -156,7 +149,7 @@ export function OrientadosCard({
   const handleDeleteClick = async (estagio: EstagioData) => {
     if (
       window.confirm(
-        `Tem certeza que deseja excluir o estágio de ${estagio.alunoNomeCompleto}?`
+        `Tem certeza que deseja excluir o estágio de ${estagio.alunoNomeCompleto}?`,
       )
     ) {
       try {
@@ -169,7 +162,7 @@ export function OrientadosCard({
         // });
 
         console.log(
-          `Deletar estágio ${estagio.id} - ${estagio.alunoNomeCompleto}`
+          `Deletar estágio ${estagio.id} - ${estagio.alunoNomeCompleto}`,
         );
         alert("Funcionalidade de exclusão será implementada em breve");
 
@@ -236,7 +229,7 @@ export function OrientadosCard({
           </h2>
           <button
             onClick={onRefresh}
-            className="px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+            className="cursor-pointer px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
           >
             Atualizar
           </button>
@@ -273,7 +266,7 @@ export function OrientadosCard({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {estagios.map((estagio, index) => (
+            {estagios.map((estagio) => (
               <TableRow key={estagio.id} className="border-b hover:bg-gray-50">
                 <TableCell className="font-medium text-gray-900">
                   {estagio.matricula}
@@ -303,7 +296,7 @@ export function OrientadosCard({
                 <TableCell className="text-center">
                   <span
                     className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(
-                      estagio.statusEstagio
+                      estagio.statusEstagio,
                     )}`}
                   >
                     {formatStatus(estagio.statusEstagio)}
@@ -393,7 +386,7 @@ export function OrientadosCard({
                 <OrientadosDados estagio={selectedEstagio} />
               </div>
             </div>
-          )
+          ),
       )}
     </div>
   );

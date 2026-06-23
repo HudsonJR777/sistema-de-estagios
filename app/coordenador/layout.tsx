@@ -3,7 +3,13 @@
 import { useEffect } from "react";
 import SideBar from "@/src/components/Header/SideBar";
 import { logout } from "@/src/services/auth";
-import { Grip, File, MessageSquareDot, Users } from "lucide-react";
+import {
+  Grip,
+  File,
+  MessageSquareDot,
+  Users,
+  BriefcaseBusiness,
+} from "lucide-react";
 
 interface ProfessorLayoutProps {
   children: React.ReactNode;
@@ -36,24 +42,29 @@ export default function ProfessorLayout({ children }: ProfessorLayoutProps) {
   // Navegação específica para coordenador incluindo a rota de professor
   const coordenadorNavigation = [
     {
-      icon: <Grip className="w-5 h-5" />,
+      icon: <Grip className="w-6 h-6" />,
       title: "Início",
       href: "/coordenador/inicio",
     },
     {
-      icon: <File className="w-5 h-5" />,
+      icon: <File className="w-6 h-6" />,
       title: "Meus Estágios",
       href: "/coordenador/meus-estagios",
     },
     {
-      icon: <Users className="w-5 h-5" />,
+      icon: <Users className="w-6 h-6" />,
       title: "Professor",
       href: "/coordenador/professor",
     },
     {
-      icon: <MessageSquareDot className="w-5 h-5" />,
+      icon: <MessageSquareDot className="w-6 h-6" />,
       title: "Mensagens",
       href: "/coordenador/mensagens",
+    },
+    {
+      icon: <BriefcaseBusiness className="w-6 h-6" />,
+      title: "Vagas",
+      href: "/coordenador/vagas",
     },
   ];
 

@@ -148,7 +148,7 @@ export default function InternshipData() {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
           },
-        }
+        },
       );
 
       // Atualizar os dados principais com os dados editados
@@ -181,7 +181,7 @@ export default function InternshipData() {
 
   const handleInputChange = (
     field: keyof InternshipData,
-    value: string | number | boolean
+    value: string | number | boolean,
   ) => {
     setEditedData((prev) => ({
       ...prev,
@@ -424,7 +424,7 @@ export default function InternshipData() {
                               onChange={(e) =>
                                 handleInputChange(
                                   field.key,
-                                  e.target.value === "true"
+                                  e.target.value === "true",
                                 )
                               }
                               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#605BFF] focus:border-transparent"
@@ -438,8 +438,8 @@ export default function InternshipData() {
                                 field.type === "date"
                                   ? "date"
                                   : field.type === "number"
-                                  ? "number"
-                                  : "text"
+                                    ? "number"
+                                    : "text"
                               }
                               value={
                                 field.type === "number"
@@ -447,8 +447,8 @@ export default function InternshipData() {
                                     ? displayValue
                                     : ""
                                   : typeof displayValue === "string"
-                                  ? displayValue
-                                  : ""
+                                    ? displayValue
+                                    : ""
                               }
                               onChange={(e) => {
                                 const value =
@@ -472,27 +472,27 @@ export default function InternshipData() {
                                 ? "Sim"
                                 : "Não"
                               : field.type === "number"
-                              ? typeof displayValue === "number"
-                                ? displayValue.toLocaleString("pt-BR", {
-                                    minimumFractionDigits:
-                                      field.key.includes("valor") ||
-                                      field.key.includes("Valor")
-                                        ? 2
-                                        : 0,
-                                    maximumFractionDigits:
-                                      field.key.includes("valor") ||
-                                      field.key.includes("Valor")
-                                        ? 2
-                                        : 0,
-                                  })
-                                : "N/A"
-                              : field.type === "date"
-                              ? displayValue
-                                ? new Date(
-                                    displayValue + "T00:00:00"
-                                  ).toLocaleDateString("pt-BR")
-                                : "N/A"
-                              : displayValue || "N/A"}
+                                ? typeof displayValue === "number"
+                                  ? displayValue.toLocaleString("pt-BR", {
+                                      minimumFractionDigits:
+                                        field.key.includes("valor") ||
+                                        field.key.includes("Valor")
+                                          ? 2
+                                          : 0,
+                                      maximumFractionDigits:
+                                        field.key.includes("valor") ||
+                                        field.key.includes("Valor")
+                                          ? 2
+                                          : 0,
+                                    })
+                                  : "N/A"
+                                : field.type === "date"
+                                  ? displayValue
+                                    ? new Date(
+                                        displayValue + "T00:00:00",
+                                      ).toLocaleDateString("pt-BR")
+                                    : "N/A"
+                                  : displayValue || "N/A"}
                           </span>
                         )}
                       </TableCell>

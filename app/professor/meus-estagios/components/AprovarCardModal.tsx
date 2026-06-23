@@ -2,7 +2,7 @@
 
 interface Relatorio {
   id: string;
-  estagioId: string;
+  estagioId?: string;
   titulo: string;
   dataEntregaPrevista: string;
   dataEntregaEfetiva: string | null;

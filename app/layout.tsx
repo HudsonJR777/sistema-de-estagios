@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Sistema de Estágios",
   description: "Sistema para gerenciamento de estágios",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

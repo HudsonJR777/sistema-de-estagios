@@ -7,7 +7,7 @@ export default function ProfessorMeusEstagiosPage() {
   const user = true;
 
   const [currentView, setCurrentView] = useState<"Estagios" | "Confirmacoes">(
-    "Estagios"
+    "Estagios",
   );
 
   if (!user) {
