@@ -13,6 +13,10 @@ import {
 import api from "@/src/services/api";
 import CadastrarProfessorModal from "./CadastrarProfessorPage";
 
+interface ProfessorPageProps {
+  refreshSignal?: number;
+}
+
 interface ProfessorData {
   id: string;
   nome: string;
@@ -27,6 +31,14 @@ export default function ProfessorPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModalCadastrar, setShowModalCadastrar] = useState(false);
+  const [vagasSignal, setVagasSignal] = useState(0);
+
+  const [refreshSignal, setRefreshSignal] = useState<ProfessorPageProps[]>([]);
+
+  const handleVagaCadastrada = () => {
+    setVagasSignal((prev) => prev + 1);
+    setRefreshSignal((prev) => [...prev, { refreshSignal: vagasSignal }]);
+  };
 
   useEffect(() => {
     const fetchProfessores = async () => {
@@ -47,14 +59,14 @@ export default function ProfessorPage() {
     };
 
     fetchProfessores();
-  }, []);
+  }, [refreshSignal]);
 
   const filteredProfessores = professores.filter(
     (professor) =>
       professor.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
       professor.emailInstitucional
         .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+        .includes(searchTerm.toLowerCase()),
   );
 
   if (loading) {
@@ -95,6 +107,7 @@ export default function ProfessorPage() {
           <CadastrarProfessorModal
             isOpen={showModalCadastrar}
             onClose={() => setShowModalCadastrar(false)}
+            onVagaCadastrada={handleVagaCadastrada}
           />
         )}
       </div>
@@ -218,7 +231,7 @@ export default function ProfessorPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {professores.reduce(
                   (total, prof) => total + prof.totalEsagiosativos,
-                  0
+                  0,
                 )}
               </p>
             </div>
@@ -237,8 +250,8 @@ export default function ProfessorPage() {
                   ? Math.round(
                       professores.reduce(
                         (total, prof) => total + prof.totalEsagiosativos,
-                        0
-                      ) / professores.length
+                        0,
+                      ) / professores.length,
                     )
                   : 0}
               </p>

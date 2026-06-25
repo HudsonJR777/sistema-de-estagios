@@ -7,6 +7,7 @@ import api from "@/src/services/api";
 interface CadastrarProfessorModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onVagaCadastrada: () => void;
 }
 
 interface ProfessorFormData {
@@ -19,6 +20,7 @@ interface ProfessorFormData {
 export default function CadastrarProfessorModal({
   isOpen,
   onClose,
+  onVagaCadastrada,
 }: CadastrarProfessorModalProps) {
   const [formData, setFormData] = useState({
     nome: "",
@@ -69,7 +71,7 @@ export default function CadastrarProfessorModal({
       });
 
       console.log("Professor cadastrado com sucesso:", response.data);
-      alert("Professor cadastrado com sucesso!");
+      onVagaCadastrada();
 
       // Limpar formulário
       setFormData({

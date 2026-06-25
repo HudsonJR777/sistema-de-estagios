@@ -32,7 +32,7 @@ export default function ProfessorVagasPage() {
         />
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="w-full">
         <CardVagas refreshSignal={vagasSignal} />
       </div>
 
