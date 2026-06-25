@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import api from "@/src/services/api";
+import ModalDetalhesVagas from "./ModalDetalhesVagas";
 
 interface ApiCardVagas {
   id: string;
@@ -28,6 +29,7 @@ export default function CardVagas({ refreshSignal }: CardVagasProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [vagas, setVagas] = useState<ApiCardVagas[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const formatarData = (data: string) => {
     if (!data) return "";
@@ -142,8 +144,8 @@ export default function CardVagas({ refreshSignal }: CardVagasProps) {
               border-[#E8EAF7]
               rounded-[20px]
               p-6
-              h-[350px]
-              w-[340px]
+              h-[340px]
+              w-[320px]
               flex
               flex-col
               shadow-sm
@@ -189,6 +191,7 @@ export default function CardVagas({ refreshSignal }: CardVagasProps) {
               </p>
 
               <button
+                onClick={() => setIsModalOpen(true)}
                 type="button"
                 className="
                   w-full
@@ -207,6 +210,12 @@ export default function CardVagas({ refreshSignal }: CardVagasProps) {
               >
                 Ver Detalhes
               </button>
+
+              <ModalDetalhesVagas
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                vagaId={vaga.id}
+              />
             </div>
           </div>
         ))}
