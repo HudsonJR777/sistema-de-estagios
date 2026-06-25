@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import Image from "next/image";
 import api from "@/src/services/api";
 
 interface ApiCardVagas {
@@ -19,26 +20,27 @@ interface ApiResponseVaga {
   dataDePublicacao: string;
 }
 
-export default function CardVagas() {
+interface CardVagasProps {
+  refreshSignal?: number;
+}
+
+export default function CardVagas({ refreshSignal }: CardVagasProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [vagas, setVagas] = useState<ApiCardVagas[]>([]);
 
   const formatarData = (data: string) => {
     if (!data) return "";
-
     const partes = data.split("-");
-
     if (partes.length !== 3) {
       return data;
     }
-
     const [ano, mes, dia] = partes;
-
     return `${dia}/${mes}/${ano}`;
   };
 
-  const fetchVagas = async () => {
+  // Envolvido em useCallback para evitar loops de renderização
+  const fetchVagas = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -65,20 +67,20 @@ export default function CardVagas() {
       setVagas(vagasTransformadas);
     } catch (err: any) {
       console.error("Erro ao buscar vagas:", err);
-
       setError(err?.response?.data?.message || "Erro ao buscar vagas.");
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
+  // Monitora tanto a montagem inicial quanto alterações no gatilho de refresh externo
   useEffect(() => {
     fetchVagas();
-  }, []);
+  }, [fetchVagas, refreshSignal]);
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex items-center justify-center min-h-[400px] w-full">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-[#5B5DFF]" />
           <span className="text-gray-600">Carregando vagas...</span>
@@ -95,9 +97,7 @@ export default function CardVagas() {
             <p className="text-lg font-semibold text-red-600">
               Erro ao carregar dados
             </p>
-
             <p className="mt-2 text-sm text-gray-500">{error}</p>
-
             <button
               onClick={fetchVagas}
               className="cursor-pointer mt-5 px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
@@ -112,15 +112,27 @@ export default function CardVagas() {
 
   if (vagas.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <p className="text-lg text-gray-500">Nenhuma vaga encontrada.</p>
+      <div className="flex flex-col items-center justify-center min-h-[450px] w-full p-8 bg-white rounded-[24px] border border-[#E8EAF7] shadow-sm">
+        <div className="relative w-32 h-32 mb-6">
+          <Image
+            src="/assets/logo.svg"
+            alt="Hebreus 13:8 - O mesmo ontem, hoje e para todo o sempre."
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+
+        <h3 className="text-2xl font-bold text-[#030229] text-center mb-2">
+          Não há nenhuma vaga cadastrada no momento
+        </h3>
       </div>
     );
   }
 
   return (
-    <div className="">
-      <div className="lg:grid lg:grid-cols-4">
+    <div className="w-full">
+      <div className="grid grid-cols-[repeat(auto-fill,340px)] gap-6 w-full justify-start">
         {vagas.map((vaga) => (
           <div
             key={vaga.id}
@@ -130,19 +142,20 @@ export default function CardVagas() {
               border-[#E8EAF7]
               rounded-[20px]
               p-6
-              min-h-[320px]
+              h-[350px]
+              w-[340px]
               flex
               flex-col
               shadow-sm
               hover:shadow-lg
               transition-all
               duration-300
-              lg:w-[380px]
+              cursor-pointer
             "
           >
             <h2
               className="
-                text-[20px]
+                text-[22px]
                 font-bold
                 leading-tight
                 text-[#0D0D2B]

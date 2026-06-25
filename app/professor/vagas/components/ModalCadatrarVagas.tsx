@@ -7,11 +7,13 @@ import api from "@/src/services/api";
 interface ModalCadastrarVagasProps {
   isOpen: boolean;
   onClose: () => void;
+  onVagaCadastrada: () => void;
 }
 
 export default function ModalCadastrarVagas({
   isOpen,
   onClose,
+  onVagaCadastrada,
 }: ModalCadastrarVagasProps) {
   const [formData, setFormData] = useState({
     titulo: "",
@@ -72,6 +74,19 @@ export default function ModalCadastrarVagas({
       });
 
       console.log("Vaga cadastrada com sucesso:", response.data);
+
+      onVagaCadastrada();
+
+      // Limpa os campos do formulário para o próximo envio
+      setFormData({
+        titulo: "",
+        descricao: "",
+        linkVaga: "",
+        linkPdf: "",
+        dataPublicacao: "",
+        dataEncerramento: "",
+      });
+
       onClose();
     } catch (error: any) {
       console.error("Erro ao cadastrar vaga:", error);
@@ -88,6 +103,7 @@ export default function ModalCadastrarVagas({
       setIsLoading(false);
     }
   };
+
   const handleSubmit = (e?: React.MouseEvent) => {
     e?.preventDefault();
     const validationError = validateForm();
@@ -102,13 +118,16 @@ export default function ModalCadastrarVagas({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-white rounded-[24px] w-full max-w-[600px] p-8 shadow-lg max-h-[90vh] overflow-y-auto">
+      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+
+      <div className="relative bg-white rounded-[24px] w-full max-w-[600px] p-8 shadow-lg max-h-[90vh] overflow-y-auto z-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-[28px] font-bold text-[#030229]">
             Cadastrar Nova Vaga
           </h1>
           <button
+            type="button"
             onClick={onClose}
             className="cursor-pointer text-[#FF6B6B] hover:bg-[#FFE5E5] p-2 rounded-full transition"
           >
@@ -117,7 +136,7 @@ export default function ModalCadastrarVagas({
         </div>
 
         {/* Form */}
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
           {/* Título da Vaga */}
           <div className="flex flex-col gap-2">
             <label className="text-[20px] font-semibold text-[#030229]">

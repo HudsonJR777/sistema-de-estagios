@@ -7,6 +7,11 @@ import ModalCadastrarVagas from "./components/ModalCadatrarVagas";
 
 export default function ProfessorVagasPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [vagasSignal, setVagasSignal] = useState(0);
+
+  const handleVagaCadastrada = () => {
+    setVagasSignal((prev) => prev + 1);
+  };
 
   return (
     <section className="relative min-h-screen space-y-10">
@@ -28,7 +33,7 @@ export default function ProfessorVagasPage() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        <CardVagas />
+        <CardVagas refreshSignal={vagasSignal} />
       </div>
 
       <button
@@ -44,6 +49,7 @@ export default function ProfessorVagasPage() {
       <ModalCadastrarVagas
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onVagaCadastrada={handleVagaCadastrada}
       />
     </section>
   );

@@ -8,6 +8,12 @@ import ModalCadastrarVagas from "@/app/professor/vagas/components/ModalCadatrarV
 export default function CoordenadorVagasPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [vagasSignal, setVagasSignal] = useState(0);
+
+  const handleVagaCadastrada = () => {
+    setVagasSignal((prev) => prev + 1);
+  };
+
   return (
     <section className="relative min-h-screen space-y-10">
       <div className="flex flex-col gap-8">
@@ -26,9 +32,8 @@ export default function CoordenadorVagasPage() {
           className="w-full h-auto rounded-lg object-cover"
         />
       </div>
-
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        <CardVagas />
+      <div className="w-full">
+        <CardVagas refreshSignal={vagasSignal} />
       </div>
 
       <button
@@ -36,7 +41,7 @@ export default function CoordenadorVagasPage() {
         onClick={() => setIsModalOpen(true)}
         className="cursor-pointer fixed bottom-6 right-[48px] rounded-[10px] 
         bg-gradient-to-r from-[#5B5DFF] to-[#7E1CFF] px-6 py-4 text-2xl font-semibold 
-        text-white  transition duration-200 hover:brightness-110"
+        text-white transition duration-200 hover:brightness-110 z-40"
       >
         Adicionar Vaga
       </button>
@@ -44,6 +49,7 @@ export default function CoordenadorVagasPage() {
       <ModalCadastrarVagas
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onVagaCadastrada={handleVagaCadastrada}
       />
     </section>
   );
