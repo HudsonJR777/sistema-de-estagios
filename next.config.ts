@@ -5,10 +5,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Ignorar erros de ESLint durante o build
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+
   async redirects() {
     return [
       {
@@ -33,6 +30,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -42,7 +40,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Configurações específicas para Vercel
+
   trailingSlash: false,
   output: "standalone",
 
