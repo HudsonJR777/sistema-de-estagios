@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 interface ModalDetalhesVagasProps {
   isOpen: boolean;
   onClose: () => void;
-  vagaId: string;
+  id: string;
 }
 
 interface ApiResponseVaga {
@@ -23,7 +23,7 @@ interface ApiResponseVaga {
 export default function ModalDetalhesVagas({
   isOpen,
   onClose,
-  vagaId,
+  id,
 }: ModalDetalhesVagasProps) {
   const [vaga, setVaga] = useState<ApiResponseVaga | null>(null);
   const [loading, setLoading] = useState(false);
@@ -53,7 +53,7 @@ export default function ModalDetalhesVagas({
   };
 
   const fetchDetalhesVaga = useCallback(async () => {
-    if (!vagaId) return;
+    if (!id) return;
 
     try {
       setLoading(true);
@@ -63,7 +63,7 @@ export default function ModalDetalhesVagas({
         typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
       const response = await api.get<ApiResponseVaga>(
-        `/api/vagas-estagio/${vagaId}/listar-vaga`,
+        `/api/vagas-estagio/${id}/listar-vaga`,
         {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
@@ -78,7 +78,7 @@ export default function ModalDetalhesVagas({
     } finally {
       setLoading(false);
     }
-  }, [vagaId]);
+  }, [id]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");

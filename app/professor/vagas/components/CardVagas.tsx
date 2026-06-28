@@ -29,7 +29,7 @@ export default function CardVagas({ refreshSignal }: CardVagasProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [vagas, setVagas] = useState<ApiCardVagas[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedVagaId, setSelectedVagaId] = useState<string | null>(null);
 
   const formatarData = (data: string) => {
     if (!data) return "";
@@ -191,7 +191,8 @@ export default function CardVagas({ refreshSignal }: CardVagasProps) {
               </p>
 
               <button
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => setSelectedVagaId(vaga.id)}
+                itemID={vaga.id}
                 type="button"
                 className="
                   w-full
@@ -210,16 +211,17 @@ export default function CardVagas({ refreshSignal }: CardVagasProps) {
               >
                 Ver Detalhes
               </button>
-
-              <ModalDetalhesVagas
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                vagaId={vaga.id}
-              />
             </div>
           </div>
         ))}
       </div>
+      {selectedVagaId && (
+        <ModalDetalhesVagas
+          isOpen={selectedVagaId !== null}
+          onClose={() => setSelectedVagaId(null)}
+          id={selectedVagaId}
+        />
+      )}
     </div>
   );
 }
