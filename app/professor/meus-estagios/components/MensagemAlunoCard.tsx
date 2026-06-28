@@ -81,7 +81,7 @@ export default function MensagemAlunoCard({
           name="titulo"
           onChange={handleChange}
           value={mensagem.titulo}
-          className="border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer mb-4 w-full rounded-2xl border bg-[#FAFAFB] p-6 text-2xl font-medium placeholder-[#A5ABD0] transition focus:outline-none focus:ring-2 focus:ring-[#5B5BF5] focus:ring-offset-2"
+          className="border-gray-300 text-black focus:ring-blue-500  mb-4 w-full rounded-2xl border bg-[#FAFAFB] p-6 text-2xl font-medium placeholder-[#A5ABD0] transition focus:outline-none focus:ring-2 focus:ring-[#5B5BF5] focus:ring-offset-2"
         />
 
         <textarea

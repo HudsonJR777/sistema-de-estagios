@@ -78,7 +78,7 @@ export default function ConfirmacoesCard() {
   const [currentPageAditivos, setCurrentPageAditivos] = useState(1);
   const itemsPerPage = 3;
   const [selectedEstagioId, setSelectedEstagioId] = useState<string | null>(
-    null
+    null,
   );
 
   // Estados para dados da API
@@ -248,12 +248,12 @@ export default function ConfirmacoesCard() {
   });
 
   const convertRelatorioToTableData = (
-    relatorio: RelatorioResponseDTO
+    relatorio: RelatorioResponseDTO,
   ): Estagio => ({
     id: relatorio.id,
     nome: relatorio.titulo,
     dataInicio: new Date(relatorio.dataEntregaPrevista).toLocaleDateString(
-      "pt-BR"
+      "pt-BR",
     ),
     concedente: "Relatório",
     professor: "Eduardo Pelli", // Temporário até ter dados relacionados
@@ -297,7 +297,7 @@ export default function ConfirmacoesCard() {
     data: Estagio[],
     title: string,
     currentPage: number,
-    setCurrentPage: (page: number) => void
+    setCurrentPage: (page: number) => void,
   ) => {
     const totalPages = Math.ceil(data.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -327,7 +327,7 @@ export default function ConfirmacoesCard() {
                   Status
                 </th>
                 <th className="px-4 py-3 text-center text-sm font-medium text-gray-700">
-                  Ações
+                  Ação
                 </th>
               </tr>
             </thead>
@@ -356,7 +356,7 @@ export default function ConfirmacoesCard() {
                   <td className="px-4 py-3">
                     <span
                       className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                        estagio.status
+                        estagio.status,
                       )}`}
                     >
                       {estagio.status}
@@ -372,7 +372,7 @@ export default function ConfirmacoesCard() {
                         <Eye className="w-4 h-4" />
                       </button>
 
-                      <button
+                      {/* <button
                         className="cursor-pointer p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                         title="Aprovar"
                       >
@@ -383,7 +383,7 @@ export default function ConfirmacoesCard() {
                         title="Rejeitar"
                       >
                         <X className="w-4 h-4" />
-                      </button>
+                      </button> */}
                     </div>
                   </td>
                 </tr>
@@ -418,7 +418,7 @@ export default function ConfirmacoesCard() {
                   >
                     {page}
                   </button>
-                )
+                ),
               )}
 
               <button
@@ -457,7 +457,7 @@ export default function ConfirmacoesCard() {
                 dashboardData.estagiosPendentes.map(convertEstagioToTableData),
                 "Novos Estágios:",
                 currentPageNovos,
-                setCurrentPageNovos
+                setCurrentPageNovos,
               )}
 
             {dashboardData.aditivosPendentes.length > 0 &&
@@ -465,17 +465,17 @@ export default function ConfirmacoesCard() {
                 dashboardData.aditivosPendentes.map(convertAditivoToTableData),
                 "Aditivos Pendentes:",
                 currentPageAditivos,
-                setCurrentPageAditivos
+                setCurrentPageAditivos,
               )}
 
             {dashboardData.relatoriosPendentes.length > 0 &&
               renderTable(
                 dashboardData.relatoriosPendentes.map(
-                  convertRelatorioToTableData
+                  convertRelatorioToTableData,
                 ),
                 "Relatórios Pendentes:",
                 currentPageRelatorios,
-                setCurrentPageRelatorios
+                setCurrentPageRelatorios,
               )}
 
             {dashboardData.rescisoesPendentes.length > 0 &&
@@ -483,17 +483,17 @@ export default function ConfirmacoesCard() {
                 dashboardData.rescisoesPendentes.map(convertEstagioToTableData),
                 "Rescisões Pendentes:",
                 currentPageRescisoes,
-                setCurrentPageRescisoes
+                setCurrentPageRescisoes,
               )}
 
             {dashboardData.conclusoesPendentes.length > 0 &&
               renderTable(
                 dashboardData.conclusoesPendentes.map(
-                  convertEstagioToTableData
+                  convertEstagioToTableData,
                 ),
                 "Estágios a Concluir:",
                 currentPageConcluir,
-                setCurrentPageConcluir
+                setCurrentPageConcluir,
               )}
 
             {/* Mensagem quando não há pendências */}

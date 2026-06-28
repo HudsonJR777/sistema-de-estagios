@@ -6,10 +6,10 @@ import { EstagioData } from "../inicio/page";
 import ConfirmacoesCard from "./components/ConfirmacoesCard";
 import { useEffect, useState } from "react";
 
-export default function ProfessorMeusEstagiosPage() {
+export default function CoordenadorEstagiosPage() {
   const user = true;
   const [currentView, setCurrentView] = useState<"Estagios" | "Confirmacoes">(
-    "Estagios"
+    "Estagios",
   );
 
   const [estagios, setEstagios] = useState<EstagioData[]>([]);
@@ -72,8 +72,8 @@ export default function ProfessorMeusEstagiosPage() {
             onClick={() => setCurrentView("Estagios")}
             className={`py-5 px-3 ${
               currentView === "Estagios"
-                ? "bg-[#605BFF] text-white rounded-tl-sm rounded-bl-sm"
-                : "bg-white text-black rounded-tr-sm rounded-br-sm"
+                ? "bg-[#605BFF] text-white text-[20px] rounded-tl-sm rounded-bl-sm"
+                : "bg-white text-black text-[20px] rounded-tr-sm rounded-br-sm"
             } cursor-pointer hover:opacity-90 transition-opacity`}
           >
             Estágios
@@ -82,8 +82,8 @@ export default function ProfessorMeusEstagiosPage() {
             onClick={() => setCurrentView("Confirmacoes")}
             className={`py-5 px-3 ${
               currentView === "Confirmacoes"
-                ? "bg-[#605BFF] text-white rounded-tr-sm rounded-br-sm"
-                : "bg-white text-black rounded-tl-sm rounded-bl-sm"
+                ? "bg-[#605BFF] text-white text-[20px] rounded-tr-sm rounded-br-sm"
+                : "bg-white text-black text-[20px] rounded-tl-sm rounded-bl-sm"
             } cursor-pointer hover:opacity-90 transition-opacity`}
           >
             Confirmações

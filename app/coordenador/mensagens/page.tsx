@@ -1,13 +1,13 @@
 "use client";
 
-import AlunosDoProfessor from "@/app/professor/mensagens/components/AlunosDoProfessor";
 import { useState } from "react";
+import InformacoesAlunosDoProfessor from "./components/InformacoesAlunosDoProfessor";
 
 export default function ProfessorMeusEstagiosPage() {
   const user = true;
 
   const [currentView, setCurrentView] = useState<"Estagios" | "Confirmacoes">(
-    "Estagios"
+    "Estagios",
   );
 
   if (!user) {
@@ -38,8 +38,8 @@ export default function ProfessorMeusEstagiosPage() {
             onClick={() => setCurrentView("Estagios")}
             className={`py-5 px-3 ${
               currentView === "Estagios"
-                ? "bg-[#605BFF] text-white rounded-tl-sm rounded-bl-sm"
-                : "bg-white text-black rounded-tr-sm rounded-br-sm"
+                ? "bg-[#605BFF] text-white text-2xl  rounded-xl"
+                : "bg-white text-black text-2xl rounded-xl"
             } cursor-pointer hover:opacity-90 transition-opacity`}
           >
             Estágios
@@ -76,7 +76,7 @@ export default function ProfessorMeusEstagiosPage() {
       </section> */}
 
       <div className="py-[100px]">
-        <AlunosDoProfessor />
+        <InformacoesAlunosDoProfessor />
       </div>
     </section>
   );

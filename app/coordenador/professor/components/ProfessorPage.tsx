@@ -20,7 +20,7 @@ interface ProfessorPageProps {
 interface ProfessorData {
   id: string;
   nome: string;
-  emailInstitucional: string;
+  email: string;
   siap: string;
   totalEsagiosativos: number;
 }
@@ -63,10 +63,8 @@ export default function ProfessorPage() {
 
   const filteredProfessores = professores.filter(
     (professor) =>
-      professor.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      professor.emailInstitucional
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()),
+      professor.nome?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      professor.email?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (loading) {
@@ -162,9 +160,7 @@ export default function ProfessorPage() {
                 <TableCell className="px-6 py-4">
                   <div className="flex items-center space-x-2">
                     <Mail className="w-4 h-4 text-gray-400" />
-                    <span className="text-gray-700">
-                      {professor.emailInstitucional}
-                    </span>
+                    <span className="text-gray-700">{professor.email}</span>
                   </div>
                 </TableCell>
                 <TableCell className="px-6 py-4">

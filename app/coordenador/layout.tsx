@@ -48,8 +48,8 @@ export default function ProfessorLayout({ children }: ProfessorLayoutProps) {
     },
     {
       icon: <File className="w-6 h-6" />,
-      title: "Meus Estágios",
-      href: "/coordenador/meus-estagios",
+      title: "Estágios",
+      href: "/coordenador/estagios",
     },
     {
       icon: <Users className="w-6 h-6" />,

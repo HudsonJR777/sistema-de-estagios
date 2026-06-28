@@ -114,7 +114,7 @@ export default function ProfessorInicioPage() {
           </h1>
         </div>
         <Image
-          src="/assets/bannerprofessor.png"
+          src="/assets/bannercoordenador.jpeg"
           alt="Hebreus 13:8 -O mesmo ontem, hoje e para todo o sempre."
           width={1200}
           height={300}

@@ -62,7 +62,7 @@ export default function AprovarEstagioModal({
       } catch (error: any) {
         console.error("Erro ao carregar estágio:", error);
         setError(
-          error.response?.data?.message || "Erro ao carregar dados do estágio"
+          error.response?.data?.message || "Erro ao carregar dados do estágio",
         );
       } finally {
         setLoadingData(false);
@@ -72,6 +72,7 @@ export default function AprovarEstagioModal({
     fetchEstagio();
   }, [isOpen, estagioId]);
 
+  // Handles de Novos Estágios
   const handleAprovar = async () => {
     setIsLoading(true);
     try {
@@ -89,8 +90,73 @@ export default function AprovarEstagioModal({
   const handleReprovar = async () => {
     setIsLoading(true);
     try {
-      // Implementar lógica de reprovação aqui
-      console.log("Reprovando estágio:", estagio?.id);
+      const response = await api.patch(`/api/estagios/${estagio?.id}/rejeitar`);
+      // Simular delay de API
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      onClose();
+    } catch (error) {
+      console.error("Erro ao reprovar estágio:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handles Rescisões Pendentes
+  const handleAprovarRecisao = async () => {
+    setIsLoading(true);
+    try {
+      const response = await api.patch(
+        `/api/estagios/${estagio?.id}/aprovar-rescisao`,
+      );
+      // Simular delay de API
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      onClose();
+    } catch (error) {
+      console.error("Erro ao reprovar estágio:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRejeitarRecisao = async () => {
+    setIsLoading(true);
+    try {
+      const response = await api.patch(
+        `/api/estagios/${estagio?.id}/rejeitar-rescisao`,
+      );
+      // Simular delay de API
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      onClose();
+    } catch (error) {
+      console.error("Erro ao reprovar estágio:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handles de Estágios a Concluir
+  const handleAprovarConclusao = async () => {
+    setIsLoading(true);
+    try {
+      const response = await api.patch(
+        `/api/estagios/${estagio?.id}/aprovar-conclusao`,
+      );
+      // Simular delay de API
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      onClose();
+    } catch (error) {
+      console.error("Erro ao reprovar estágio:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRejeitarConclusao = async () => {
+    setIsLoading(true);
+    try {
+      const response = await api.patch(
+        `/api/estagios/${estagio?.id}/rejeitar-conclusao`,
+      );
       // Simular delay de API
       await new Promise((resolve) => setTimeout(resolve, 1000));
       onClose();

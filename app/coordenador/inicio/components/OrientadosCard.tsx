@@ -110,7 +110,7 @@ export function OrientadosCard({
     [key: string]: boolean;
   }>({});
   const [selectedEstagio, setSelectedEstagio] = useState<EstagioData | null>(
-    null
+    null,
   );
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
 
@@ -156,7 +156,7 @@ export function OrientadosCard({
   const handleDeleteClick = async (estagio: EstagioData) => {
     if (
       window.confirm(
-        `Tem certeza que deseja excluir o estágio de ${estagio.alunoNomeCompleto}?`
+        `Tem certeza que deseja excluir o estágio de ${estagio.alunoNomeCompleto}?`,
       )
     ) {
       try {
@@ -169,7 +169,7 @@ export function OrientadosCard({
         // });
 
         console.log(
-          `Deletar estágio ${estagio.id} - ${estagio.alunoNomeCompleto}`
+          `Deletar estágio ${estagio.id} - ${estagio.alunoNomeCompleto}`,
         );
         alert("Funcionalidade de exclusão será implementada em breve");
 
@@ -236,7 +236,7 @@ export function OrientadosCard({
           </h2>
           <button
             onClick={onRefresh}
-            className="cursor-pointer px-3 py-1 text-sm bg-[#605BFF] text-white rounded-md hover:bg-[#504EDD] transition-colors"
+            className="cursor-pointer text-[16px] px-3 py-1 bg-[#605BFF] text-white rounded-md hover:bg-[#504EDD] transition-colors"
           >
             Atualizar
           </button>
@@ -303,7 +303,7 @@ export function OrientadosCard({
                 <TableCell className="text-center">
                   <span
                     className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(
-                      estagio.statusEstagio
+                      estagio.statusEstagio,
                     )}`}
                   >
                     {formatStatus(estagio.statusEstagio)}
@@ -393,7 +393,7 @@ export function OrientadosCard({
                 <OrientadosDados estagio={selectedEstagio} />
               </div>
             </div>
-          )
+          ),
       )}
     </div>
   );
