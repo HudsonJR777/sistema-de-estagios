@@ -28,7 +28,12 @@ interface EstagioResponseDTO {
   aditivos: any[];
 }
 
-type tipoAcaoEstagio = "novo" | "rescisao" | "conclusao";
+type tipoAcaoEstagio =
+  | "novo"
+  | "rescisao"
+  | "conclusao"
+  | "relatorios"
+  | "aditivos";
 
 interface AprovarEstagioModalProps {
   isOpen: boolean;
@@ -90,6 +95,14 @@ export default function AprovarEstagioModal({
     conclusao: {
       aprovar: `/api/estagios/${estagio?.id}/aprovar-conclusao`,
       rejeitar: `/api/estagios/${estagio?.id}/rejeitar-conclusao`,
+    },
+    relatorios: {
+      aprovar: `/api/relatorios/${estagio?.id}/aprovar`,
+      rejeitar: `/api/relatorios/${estagio?.id}/rejeitar`,
+    },
+    aditivos: {
+      aprovar: `/api/aditivos/${estagio?.id}/aprovar-aditivo`,
+      rejeitar: `/api/aditivos/${estagio?.id}/rejeitar`,
     },
   };
 

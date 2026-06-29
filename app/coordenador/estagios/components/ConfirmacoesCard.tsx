@@ -78,7 +78,12 @@ export default function ConfirmacoesCard() {
   const [currentPageAditivos, setCurrentPageAditivos] = useState(1);
   const itemsPerPage = 3;
 
-  type TipoAcaoEstagio = "novo" | "rescisao" | "conclusao";
+  type TipoAcaoEstagio =
+    | "novo"
+    | "rescisao"
+    | "conclusao"
+    | "relatorios"
+    | "aditivos";
 
   const [selectedeEstagio, setSelectedEstagio] = useState<{
     id: string;
@@ -478,6 +483,7 @@ export default function ConfirmacoesCard() {
                 "Aditivos Pendentes:",
                 currentPageAditivos,
                 setCurrentPageAditivos,
+                "aditivos",
               )}
 
             {dashboardData.relatoriosPendentes.length > 0 &&
@@ -488,6 +494,7 @@ export default function ConfirmacoesCard() {
                 "Relatórios Pendentes:",
                 currentPageRelatorios,
                 setCurrentPageRelatorios,
+                "relatorios",
               )}
 
             {dashboardData.rescisoesPendentes.length > 0 &&
