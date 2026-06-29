@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import api from "@/src/services/api";
+import ModalMotivoRejeicao from "./ModalMotivoRejeicao";
 
 // Usando a mesma interface do ConfirmacoesCard
 interface EstagioResponseDTO {
@@ -27,21 +28,26 @@ interface EstagioResponseDTO {
   aditivos: any[];
 }
 
+type tipoAcaoEstagio = "novo" | "rescisao" | "conclusao";
+
 interface AprovarEstagioModalProps {
   isOpen: boolean;
   onClose: () => void;
   estagioId: string;
+  tipo: tipoAcaoEstagio;
 }
 
 export default function AprovarEstagioModal({
   isOpen,
   onClose,
   estagioId,
+  tipo,
 }: AprovarEstagioModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [estagio, setEstagio] = useState<EstagioResponseDTO | null>(null);
   const [loadingData, setLoadingData] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isMotivoModalOpen, setIsMotivoModalOpen] = useState(false);
 
   // Buscar dados do estágio quando o modal abrir
   useEffect(() => {
@@ -72,99 +78,52 @@ export default function AprovarEstagioModal({
     fetchEstagio();
   }, [isOpen, estagioId]);
 
-  // Handles de Novos Estágios
-  const handleAprovar = async () => {
-    setIsLoading(true);
+  const rotas = {
+    novo: {
+      aprovar: `/api/estagios/${estagio?.id}/aprovar`,
+      rejeitar: `/api/estagios/${estagio?.id}/rejeitar`,
+    },
+    rescisao: {
+      aprovar: `/api/estagios/${estagio?.id}/aprovar-rescisao`,
+      rejeitar: `/api/estagios/${estagio?.id}/rejeitar-rescisao`,
+    },
+    conclusao: {
+      aprovar: `/api/estagios/${estagio?.id}/aprovar-conclusao`,
+      rejeitar: `/api/estagios/${estagio?.id}/rejeitar-conclusao`,
+    },
+  };
+
+  const executarAprovacao = async () => {
     try {
-      const response = await api.patch(`/api/estagios/${estagio?.id}/aprovar`);
-      // Simular delay de API
+      await api.patch(rotas[tipo].aprovar);
       await new Promise((resolve) => setTimeout(resolve, 1000));
       onClose();
     } catch (error) {
-      console.error("Erro ao aprovar estágio:", error);
+      console.error(`Erro ao aprovar estágio:`, error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleReprovar = async () => {
+  const executarRejeicao = async (motivo: string) => {
     setIsLoading(true);
     try {
-      const response = await api.patch(`/api/estagios/${estagio?.id}/rejeitar`);
-      // Simular delay de API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await api.patch(rotas[tipo].rejeitar, {
+        motivo,
+      });
+      setIsMotivoModalOpen(false);
       onClose();
-    } catch (error) {
-      console.error("Erro ao reprovar estágio:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Handles Rescisões Pendentes
-  const handleAprovarRecisao = async () => {
-    setIsLoading(true);
-    try {
-      const response = await api.patch(
-        `/api/estagios/${estagio?.id}/aprovar-rescisao`,
-      );
-      // Simular delay de API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      onClose();
-    } catch (error) {
-      console.error("Erro ao reprovar estágio:", error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleAprovar = () => {
+    executarAprovacao();
   };
 
-  const handleRejeitarRecisao = async () => {
-    setIsLoading(true);
-    try {
-      const response = await api.patch(
-        `/api/estagios/${estagio?.id}/rejeitar-rescisao`,
-      );
-      // Simular delay de API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      onClose();
-    } catch (error) {
-      console.error("Erro ao reprovar estágio:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Handles de Estágios a Concluir
-  const handleAprovarConclusao = async () => {
-    setIsLoading(true);
-    try {
-      const response = await api.patch(
-        `/api/estagios/${estagio?.id}/aprovar-conclusao`,
-      );
-      // Simular delay de API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      onClose();
-    } catch (error) {
-      console.error("Erro ao reprovar estágio:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleRejeitarConclusao = async () => {
-    setIsLoading(true);
-    try {
-      const response = await api.patch(
-        `/api/estagios/${estagio?.id}/rejeitar-conclusao`,
-      );
-      // Simular delay de API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      onClose();
-    } catch (error) {
-      console.error("Erro ao reprovar estágio:", error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleReprovar = () => {
+    setIsMotivoModalOpen(true);
   };
 
   const formatCurrency = (value: number) => {
@@ -381,6 +340,12 @@ export default function AprovarEstagioModal({
           )}
         </div>
       </div>
+      <ModalMotivoRejeicao
+        isOpen={isMotivoModalOpen}
+        onClose={() => setIsMotivoModalOpen(false)}
+        onConfirm={executarRejeicao}
+        isLoading={isLoading}
+      />
     </div>
   );
 }

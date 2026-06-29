@@ -77,9 +77,13 @@ export default function ConfirmacoesCard() {
   const [currentPageRelatorios, setCurrentPageRelatorios] = useState(1);
   const [currentPageAditivos, setCurrentPageAditivos] = useState(1);
   const itemsPerPage = 3;
-  const [selectedEstagioId, setSelectedEstagioId] = useState<string | null>(
-    null,
-  );
+
+  type TipoAcaoEstagio = "novo" | "rescisao" | "conclusao";
+
+  const [selectedeEstagio, setSelectedEstagio] = useState<{
+    id: string;
+    tipo: TipoAcaoEstagio;
+  } | null>(null);
 
   // Estados para dados da API
   const [dashboardData, setDashboardData] = useState<DashboardPendenciasDTO>({
@@ -298,6 +302,7 @@ export default function ConfirmacoesCard() {
     title: string,
     currentPage: number,
     setCurrentPage: (page: number) => void,
+    tipo?: TipoAcaoEstagio,
   ) => {
     const totalPages = Math.ceil(data.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -365,7 +370,13 @@ export default function ConfirmacoesCard() {
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-2">
                       <button
-                        onClick={() => setSelectedEstagioId(estagio.id)}
+                        onClick={() => {
+                          if (!tipo) return;
+                          setSelectedEstagio({
+                            id: estagio.id,
+                            tipo,
+                          });
+                        }}
                         className=" cursor-pointer p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         title="Visualizar"
                       >
@@ -458,6 +469,7 @@ export default function ConfirmacoesCard() {
                 "Novos Estágios:",
                 currentPageNovos,
                 setCurrentPageNovos,
+                "novo",
               )}
 
             {dashboardData.aditivosPendentes.length > 0 &&
@@ -484,6 +496,7 @@ export default function ConfirmacoesCard() {
                 "Rescisões Pendentes:",
                 currentPageRescisoes,
                 setCurrentPageRescisoes,
+                "rescisao",
               )}
 
             {dashboardData.conclusoesPendentes.length > 0 &&
@@ -494,6 +507,7 @@ export default function ConfirmacoesCard() {
                 "Estágios a Concluir:",
                 currentPageConcluir,
                 setCurrentPageConcluir,
+                "conclusao",
               )}
 
             {/* Mensagem quando não há pendências */}
@@ -513,11 +527,12 @@ export default function ConfirmacoesCard() {
       </div>
 
       {/* Modal único para todos os estágios */}
-      {selectedEstagioId && (
+      {selectedeEstagio && (
         <AprovarEstagioModal
-          isOpen={!!selectedEstagioId}
-          onClose={() => setSelectedEstagioId(null)}
-          estagioId={selectedEstagioId}
+          isOpen={!!selectedeEstagio}
+          onClose={() => setSelectedEstagio(null)}
+          estagioId={selectedeEstagio.id}
+          tipo={selectedeEstagio.tipo}
         />
       )}
     </div>
