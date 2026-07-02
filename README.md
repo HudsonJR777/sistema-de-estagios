@@ -166,21 +166,23 @@ npm run start
 
 ```mermaid
 flowchart LR
-  User[Usuário] -->|login| AuthContext[AuthContext]
-  AuthContext --> Permissions[Permissões/Claims]
-  Permissions --> Aluno[Aluno]
-  Permissions --> Professor[Professor]
-  Permissions --> Coordenador[Coordenador]
-  subgraph AppLayout[App Layout (app/layout.tsx)]
-    AppLayout --> Sidebar[Sidebar]
-    AppLayout --> Header[Header]
-    AppLayout --> Content[Content / Routes]
+  User("Usuário") -->|login| AuthContext("AuthContext")
+  AuthContext --> Permissions("Permissões/Claims")
+  Permissions --> Aluno("Aluno")
+  Permissions --> Professor("Professor")
+  Permissions --> Coordenador("Coordenador")
+
+  subgraph AppLayout["App Layout (app/layout.tsx)"]
+    Sidebar["Sidebar"]
+    Header["Header"]
+    Content["Content / Routes"]
   end
-  Aluno -->|acessa| AlunoLayout[app/aluno/layout.tsx]
-  Professor -->|acessa| ProfessorLayout[app/professor/layout.tsx]
-  Coordenador -->|acessa| CoordenadorLayout[app/coordenador/layout.tsx]
-  AuthContext -->|fornece token| API[services/api.ts]
-  API -->|chama| Backend[API Backend]
+
+  Aluno -->|acessa| AlunoLayout["app/aluno/layout.tsx"]
+  Professor -->|acessa| ProfessorLayout["app/professor/layout.tsx"]
+  Coordenador -->|acessa| CoordenadorLayout["app/coordenador/layout.tsx"]
+  AuthContext -->|fornece token| API["services/api.ts"]
+  API -->|chama| Backend["API Backend"]
 ```
 
 ---
