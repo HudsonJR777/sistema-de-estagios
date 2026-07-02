@@ -162,6 +162,27 @@ npm run start
 - Adicionar diagrama RBAC (Mermaid) destacando fluxos de autorização;
 - Criar guia rápido para contribuir e para executar testes/lint no repositório.
 
+**Diagrama RBAC e Hierarquia de Layouts**
+
+```mermaid
+flowchart LR
+  User[Usuário] -->|login| AuthContext[AuthContext]
+  AuthContext --> Permissions[Permissões/Claims]
+  Permissions --> Aluno[Aluno]
+  Permissions --> Professor[Professor]
+  Permissions --> Coordenador[Coordenador]
+  subgraph AppLayout[App Layout (app/layout.tsx)]
+    AppLayout --> Sidebar[Sidebar]
+    AppLayout --> Header[Header]
+    AppLayout --> Content[Content / Routes]
+  end
+  Aluno -->|acessa| AlunoLayout[app/aluno/layout.tsx]
+  Professor -->|acessa| ProfessorLayout[app/professor/layout.tsx]
+  Coordenador -->|acessa| CoordenadorLayout[app/coordenador/layout.tsx]
+  AuthContext -->|fornece token| API[services/api.ts]
+  API -->|chama| Backend[API Backend]
+```
+
 ---
 
 - Adicionar exemplos de código do `AuthContext` e de `src/services/api.ts` ao README.
