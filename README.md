@@ -162,7 +162,6 @@ npm run start
 - Adicionar diagrama RBAC (Mermaid) destacando fluxos de autorização;
 - Criar guia rápido para contribuir e para executar testes/lint no repositório.
 
-**Diagrama RBAC e Hierarquia de Layouts**
 
 ```mermaid
 flowchart LR
