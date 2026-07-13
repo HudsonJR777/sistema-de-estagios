@@ -156,12 +156,7 @@ npm run build
 npm run start
 ```
 
-**Próximos passos sugeridos**
-
-- Incluir exemplos de payloads de API e resposta no README (endpoints principais);
-- Adicionar diagrama RBAC (Mermaid) destacando fluxos de autorização;
-- Criar guia rápido para contribuir e para executar testes/lint no repositório.
-
+**Diagrama RBAC e Hierarquia de Layouts**
 
 ```mermaid
 flowchart LR
